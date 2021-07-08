@@ -1,6 +1,8 @@
 package main
 
 import (
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 
@@ -88,10 +90,22 @@ func main() {
 	router := gin.Default()
 	router.LoadHTMLGlob("templates/*.html")
 
-	data := "Hello Go/Gin"
+	dbInit()
 
-	router.GET("/", func(ctx *gin.Context) {
-		ctx.HTML(200, "index.html", gin.H{"data": data})
+	//Index
+	router.GET("/", func(ctx *gin.Context){
+		todos := dbGetAll()
+		ctx.HTML(200, "index.html", gin.H{
+			"todos": todos,
+		})
+	})
+	
+
+	router.POST("/new", func(ctx *gin.Context){
+		text := ctx.PostForm("text")
+		status :=ctx.PostForm("status")
+		dbInsert(text, status)
+		ctx.Redirect(302, "/")
 	})
 
 	router.Run()

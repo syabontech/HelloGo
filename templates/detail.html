@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+
+
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sample App</title>
+</head>
+
+<body>
+<h2>aaa</h2>
+
+<p>{{.user.ID}}</p>
+<p>{{.user.Name}}</p>
+<p>{{.user.Age}}</p>
+
+<form method="post" action="/update/{{.todo.ID}}">
+    <p>内容<input type="text" name="text" size="30" value="{{.todo.text}}"></p>
+    <p>状態
+        <select name="status">
+            {{if eq .todo.Status "未実行"}}
+                <option value="未実行" selected>未実行</option>
+                <option value="実行中">実行中</option>
+                <option value="終了">終了</option>
+            {{if eq .todo.Status "実行中"}}
+                <option value="未実行">未実行</option>
+                <option value="実行中" selected>実行中</option>
+                <option value="終了">終了</option>
+            {{if eq .todo.Status "終了"}}
+                <option value="未実行">未実行</option>
+                <option value="実行中">実行中</option>
+                <option value="終了" selected>終了</option>
+            {{end}}
+        </select>
+    </p>
+</form>
+</body>
